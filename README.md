@@ -25,3 +25,4 @@ _Пример работы программы:_
 
 ## Авторы
 * **Даниил Paranoic** - *Initial work* - [zmqp](https://github.com/prn-ic)
+See also the list of [contributors](https://github.com/prn-ic/-1/graphs/contributors) who participated in this project.
