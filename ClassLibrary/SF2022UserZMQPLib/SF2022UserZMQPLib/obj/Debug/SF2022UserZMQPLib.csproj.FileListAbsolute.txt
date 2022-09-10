@@ -1,0 +1,6 @@
+D:\Crycixion\WorldSkills\ClassLibrary\SF2022UserZMQPLib\SF2022UserZMQPLib\bin\Debug\SF2022UserZMQPLib.dll
+D:\Crycixion\WorldSkills\ClassLibrary\SF2022UserZMQPLib\SF2022UserZMQPLib\bin\Debug\SF2022UserZMQPLib.pdb
+D:\Crycixion\WorldSkills\ClassLibrary\SF2022UserZMQPLib\SF2022UserZMQPLib\obj\Debug\SF2022UserZMQPLib.csproj.AssemblyReference.cache
+D:\Crycixion\WorldSkills\ClassLibrary\SF2022UserZMQPLib\SF2022UserZMQPLib\obj\Debug\SF2022UserZMQPLib.csproj.CoreCompileInputs.cache
+D:\Crycixion\WorldSkills\ClassLibrary\SF2022UserZMQPLib\SF2022UserZMQPLib\obj\Debug\SF2022UserZMQPLib.dll
+D:\Crycixion\WorldSkills\ClassLibrary\SF2022UserZMQPLib\SF2022UserZMQPLib\obj\Debug\SF2022UserZMQPLib.pdb
