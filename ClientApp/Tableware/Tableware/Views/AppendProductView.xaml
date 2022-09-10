@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="Tableware.Views.AppendProductView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tableware.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1000">
+    <Grid>
+        <TextBlock FontSize="20px" FontFamily="Comic Sans MS" HorizontalAlignment="Center" VerticalAlignment="Top">Добавить продукт</TextBlock>
+        <Grid Background="#76E383" Margin="50">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Width="350">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Изображение:</TextBlock>
+                <Button Margin="10" Width="150" Command="{Binding LoadProductImageCommand}">Выбрать изображение</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Width="350"> 
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Артикул: </TextBlock>
+                <TextBox Margin="10" Width="150" VerticalContentAlignment="Center" FontSize="16px" FontFamily="Comic Sans MS" Text="{Binding ProductArticleNumber}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Width="350">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Наименование:</TextBlock>
+                <TextBox Margin="10" Width="150" VerticalContentAlignment="Center" FontSize="16px" FontFamily="Comic Sans MS" Text="{Binding ProductName}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Stretch" Width="350">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Категория:</TextBlock>
+                <ComboBox Margin="10" Width="150" VerticalContentAlignment="Center" FontSize="16px" FontFamily="Comic Sans MS" ItemsSource="{Binding Category}" SelectedItem="{Binding ProductSelectCategory}" SelectedIndex="0"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Center" Width="350">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Количество на складе:</TextBlock>
+                <TextBox Margin="10" Width="150" VerticalContentAlignment="Center" FontSize="16px" FontFamily="Comic Sans MS" Text="{Binding ProductQuantityInStock}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Center" Width="350">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Единица измерения:</TextBlock>
+                <TextBox Margin="10" Width="150" VerticalContentAlignment="Center" FontSize="16px" FontFamily="Comic Sans MS" Text="{Binding ProductUnit}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="6" HorizontalAlignment="Center" Width="350">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Поставщик:</TextBlock>
+                <TextBox Margin="10" Width="150" VerticalContentAlignment="Center" FontSize="16px" FontFamily="Comic Sans MS" Text="{Binding ProductProvider}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="7" HorizontalAlignment="Center" Width="350">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Стоимость за единицу:</TextBlock>
+                <TextBox Margin="10" Width="150" VerticalContentAlignment="Center" FontSize="16px" FontFamily="Comic Sans MS" Text="{Binding ProductCost}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="8" HorizontalAlignment="Center" Width="350">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Подробное описание:</TextBlock>
+                <TextBox Margin="10" Width="150" VerticalContentAlignment="Center" FontSize="16px" FontFamily="Comic Sans MS" Text="{Binding ProductDescription}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="9" HorizontalAlignment="Center" Width="350">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Производитель:</TextBlock>
+                <TextBox Margin="10" Width="150" VerticalContentAlignment="Center" FontSize="16px" FontFamily="Comic Sans MS" Text="{Binding ProductManufacturer}"></TextBox>
+            </StackPanel>
+        </Grid>
+        <Button Margin="10" Width="150" VerticalAlignment="Bottom" Command="{Binding CreateProductCommand}">Сохранить</Button>
+    </Grid>
+</UserControl>

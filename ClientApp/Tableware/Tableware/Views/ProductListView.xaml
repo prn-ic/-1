@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="Tableware.Views.ProductListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewmodel="clr-namespace:Tableware.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tableware.Views"
+             xmlns:services="clr-namespace:Tableware.Services"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <services:ImageConverter x:Key="ImageConverter"/>
+        <services:BackgroundConverter x:Key="BackgroundConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Height="60" Grid.Row="0" Margin="25, 0, 10, 0">
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Стоимость по:</TextBlock>
+                <Button Margin="10" Background="#258C51" VerticalAlignment="Center" Content="{Binding SortByCostText}" Command="{Binding SortByCostCommand}"></Button>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" Margin="25, 0, 10, 0">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Фильтр по:</TextBlock>
+                <ComboBox Margin="10" SelectedIndex="0" SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding Manufacturers}" MinWidth="150">
+
+                </ComboBox>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="25, 0, 10, 0">
+                <TextBlock FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Поиск:</TextBlock>
+                <TextBox Width="120" Background="#258C51" Text="{Binding SearchBarValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  FontFamily="Comic Sans MS">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+            </StackPanel>
+            <TextBlock Margin="25, 0, 0, 0" FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
+            <Button Content="Выход" Margin="100,15,0,15" VerticalAlignment="Center" Background="#258C51" Command="{Binding NavigateLoginCommand}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Height="50" Grid.Row="1">
+            <TextBlock Margin="25, 0, 10, 0" FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center" Text="{Binding SelectedProductCount}"></TextBlock>
+            <TextBlock Margin="25, 0, 10, 0" FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center">Из</TextBlock>
+            <TextBlock Margin="25, 0, 10, 0" FontSize="16px" FontFamily="Comic Sans MS" VerticalAlignment="Center" Text="{Binding AllProductCount}"></TextBlock>
+            <Button Background="#258C51" Margin="10" Visibility="{Binding AdminPanelVisibility}" Command="{Binding AddProductCommand}">Добавить товар</Button>
+            <Button Background="#258C51" Margin="10" Visibility="{Binding AdminPanelVisibility}" Command="{Binding EditProductCommand}">Изменить товар</Button>
+            <Button Background="#258C51" Margin="10" Visibility="{Binding AdminPanelVisibility}" Command="{Binding RemoveProductCommand}" CommandParameter="{Binding SelectedProduct.ProductArticleNumber}">Удалить товар</Button>
+        </StackPanel>
+        <ListView Grid.Row="2" Margin="30" ItemsSource="{Binding Products}" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" VerticalAlignment="Center" Width="700" SelectedItem="{Binding SelectedProduct}">
+            <ListView.Style>
+                <Style TargetType="ListView">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="FontFamily" Value="Comic Sans MS"/>
+                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="ScrollViewer.Background" Value="#76E383"/>
+                    <Setter Property="ItemContainerStyle">
+                        <Setter.Value>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border x:Name="Bd"
+                                                Background="{TemplateBinding Background}"
+                                                SnapsToDevicePixels="true">
+                                                <ContentPresenter />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="Selector.IsSelectionActive"
+                                                        Value="False" />
+                                                        <Condition Property="IsSelected"
+                                                         Value="True" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter Property="Background"
+                                                     TargetName="Bd"
+                                                     Value="White" />           
+                                                </MultiTrigger>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="Selector.IsSelectionActive"
+                                                         Value="True" />
+                                                        <Condition Property="IsSelected"
+                                                        Value="True" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter Property="Background"
+                                                TargetName="Bd"
+                                                Value="White" />
+                                                </MultiTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="ItemTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Background="{Binding ProductQuantityInStock, Converter={StaticResource BackgroundConverter}}" Margin="0,10,0,10">
+                                    <Image HorizontalAlignment="Left" VerticalAlignment="Center" Source="{Binding ProductPhoto, Converter={StaticResource ImageConverter}}" Width="50" Height="50" Margin="30" ></Image>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock x:Name="ProductName" Text="{Binding ProductName}" FontWeight="Bold"></TextBlock>
+                                        <TextBlock x:Name="ProductDescription" Text="{Binding ProductDescription}"></TextBlock>
+                                        <TextBlock x:Name="ProductManufacturer" Text="{Binding ProductManufacturer}"></TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>Цена:</TextBlock>
+                                            <TextBlock x:Name="ProductCost" Text="{Binding ProductCost}"></TextBlock>
+                                        </StackPanel>
+                                        
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.Style>
+        </ListView>
+    </Grid>
+</UserControl>
