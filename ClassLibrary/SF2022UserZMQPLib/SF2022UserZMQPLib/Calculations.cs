@@ -9,56 +9,48 @@ namespace SF2022UserZMQPLib
     public class Calculations
     {
         public string[] AvailablePeriods(TimeSpan[] startTimes,
-                                         int[] durations,
-                                         TimeSpan beginWorkingTime,
-                                         TimeSpan endWorkingTime,
-                                         int consultationTime)
+            int[] durations,
+            TimeSpan beginWorkingTime,
+            TimeSpan endWorkingTime,
+            int consultationTime)
         {
-            List<string> result = new List<string>();
-
-            var temps = beginWorkingTime;
-            for (int i = 0; i < startTimes.Length; i++)
-            {
-
-                if (((startTimes[i].TotalMinutes - temps.TotalMinutes)) < consultationTime && ((startTimes[i].TotalMinutes - temps.TotalMinutes)) != 0)
-                {
-                    var temp = (startTimes[i].TotalMinutes - beginWorkingTime.TotalMinutes) * -1;
-                    beginWorkingTime += TimeSpan.FromMinutes((double)temp + durations[i]);
-                    continue;
-                }
-                while (beginWorkingTime < startTimes[i])
-                {
-                    if (((startTimes[i].TotalMinutes - beginWorkingTime.TotalMinutes)) < consultationTime)
-                    {
-                        
-                        beginWorkingTime = startTimes[i];
-                        continue;
-                    }
-                    var temp = beginWorkingTime;
-                    beginWorkingTime += TimeSpan.FromMinutes((double)consultationTime);
-                    result.Add($"{temp.ToString(@"hh\:mm")}-{beginWorkingTime.ToString(@"hh\:mm")}");
-                    
-                }
-                var tempTime = beginWorkingTime;
-                
-                beginWorkingTime += TimeSpan.FromMinutes((double)durations[i]);
-                temps = beginWorkingTime;
-                if (((startTimes[i].TotalMinutes - beginWorkingTime.TotalMinutes) * -1) < consultationTime)
-                {
-                    var temp = (startTimes[i].TotalMinutes - beginWorkingTime.TotalMinutes) * -1;
-                    beginWorkingTime += TimeSpan.FromMinutes((double)temp + durations[i]);
-                }
-            }
-
+            List<string> periods = new List<string>();
+            int j = 0;
             while (beginWorkingTime < endWorkingTime)
             {
-                var temp = beginWorkingTime;
-                beginWorkingTime += TimeSpan.FromMinutes((double)consultationTime);
-                result.Add($"{temp.ToString(@"hh\:mm")}-{beginWorkingTime.ToString(@"hh\:mm")}");
+                if (j >= startTimes.Length)
+                {
+                    beginWorkingTime += TimeSpan.FromMinutes(consultationTime);
+                    periods
+                        .Add($"{beginWorkingTime - TimeSpan.FromMinutes(consultationTime)}" +
+                        $" - {beginWorkingTime}");
+                    continue;
+                }
+
+                if ((beginWorkingTime < startTimes[j]) &&
+                    (beginWorkingTime < startTimes[j] + TimeSpan.FromMinutes(durations[j])) &&
+                    (startTimes[j].Subtract(beginWorkingTime) >= TimeSpan.FromMinutes(consultationTime)))
+                {
+                    beginWorkingTime += TimeSpan.FromMinutes(consultationTime);
+                    periods
+                        .Add($"{beginWorkingTime - TimeSpan.FromMinutes(consultationTime)}" +
+                        $" - {beginWorkingTime}");
+                }
+                else
+                {
+                    if (startTimes[j].Subtract(beginWorkingTime) <= TimeSpan.FromMinutes(consultationTime))
+                    {
+                        beginWorkingTime += TimeSpan.FromMinutes(durations[j]) + startTimes[j].Subtract(beginWorkingTime);
+                    }
+                    else
+                    {
+                        beginWorkingTime += TimeSpan.FromMinutes(durations[j]);
+                    }
+                    j++;
+                }
             }
 
-            return result.ToArray();
-
+            return periods.ToArray(); ;
         }
     }
 }
